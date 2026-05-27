@@ -1,0 +1,16 @@
+# Ignore the Arch virtual environment (and any future Windows ones)
+.venv/
+.venv-arch/
+.venv-win/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Manim's partial render cache
+partial_movie_files/
+
+# (Optional) Ignore the rendered media output to prevent syncing heavy video files
+images/
+Tex/
+texts/
