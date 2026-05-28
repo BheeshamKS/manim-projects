@@ -446,7 +446,7 @@ class BytePairEncoding(MovingCameraScene):
             "13"
         ]
 
-        full_text = "Write_ a_poem_about_silicon."
+        full_text = "Write_a_poem_about_silicon."
 
         prompt_text = Text(
             full_text,
