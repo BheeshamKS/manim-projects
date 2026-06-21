@@ -18,10 +18,10 @@ class OSDivideScene(Scene):
         # tracr Boilerplate & Styling
         # --------------------------------------------------
         
-        BG = "#0C0A10"  # OS background
-        BG_PY = "#080C12" # Python background
+        BG = "#1B2125"  # OS background
+        BG_PY = "#1D212B" # Python background
         WHITE = "#E8F1FF"
-        MUTED = "#7C8DA6"
+        MUTED = "#A6B1C1"
         CYAN = "#00C2FF"
         BLOCK_BG = "#101722"
         MONO = "JetBrains Mono"

@@ -9,7 +9,7 @@ class BytecodeScene(Scene):
         # Colors
         # --------------------------------------------------
 
-        BG = "#080C12"
+        BG = "#000000"
         TEXT = "#E8F1FF"
         MUTED = "#7C8DA6"
         CYAN = "#00C2FF"

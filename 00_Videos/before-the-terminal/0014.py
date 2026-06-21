@@ -9,7 +9,7 @@ class SyscallScene(Scene):
         # tracr Boilerplate & Styling
         # --------------------------------------------------
         
-        BG = "#080C12"
+        BG = "#000000"
         WHITE = "#E8F1FF"
         MUTED = "#7C8DA6"
         GREEN = "#4DDD70"
