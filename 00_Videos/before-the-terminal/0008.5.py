@@ -66,23 +66,7 @@ class ASTConstruction(Scene):
         arg_label.set_opacity(0)
 
         # --------------------------------------------------
-        # Connection lines (boxes → role labels)
-        # --------------------------------------------------
-
-        line_func = Line(
-            box_print.get_top(), func_label.get_bottom(),
-            color=CYAN, stroke_width=2.5,
-        )
-        line_func.set_opacity(0)
-
-        line_arg = Line(
-            box_hello.get_top(), arg_label.get_bottom(),
-            color=GOLD, stroke_width=2.5,
-        )
-        line_arg.set_opacity(0)
-
-        # --------------------------------------------------
-        # Tree structure (above roles)
+        # Tree structure
         # --------------------------------------------------
 
         def make_tree_node(text, color, width=2.6, height=0.6):
@@ -91,7 +75,7 @@ class ASTConstruction(Scene):
                 stroke_color=color, stroke_width=2.5,
                 fill_opacity=0,
             )
-            txt = Text(text, font=MONO, font_size=22, color=TEXT)
+            txt = Text(text, font=MONO, font_size=22, color=BG)
             txt.move_to(rect)
             return VGroup(rect, txt)
 
@@ -99,23 +83,22 @@ class ASTConstruction(Scene):
         call_node.move_to(UP * 1.4)
         call_node.set_opacity(0)
 
-        # Lines from role labels to Call
-        line_func_call = Line(
-            func_label.get_top(), call_node.get_bottom(),
+        # Direct lines from boxes to Call
+        line_print_call = Line(
+            box_print.get_top(), call_node.get_bottom(),
             color=CYAN, stroke_width=2.5,
         )
-        line_func_call.set_opacity(0)
+        line_print_call.set_opacity(0)
 
-        line_arg_call = Line(
-            arg_label.get_top(), call_node.get_bottom(),
+        line_hello_call = Line(
+            box_hello.get_top(), call_node.get_bottom(),
             color=GOLD, stroke_width=2.5,
         )
-        line_arg_call.set_opacity(0)
+        line_hello_call.set_opacity(0)
 
         tree_group = VGroup(
-            call_node, line_func_call, line_arg_call,
+            call_node, line_print_call, line_hello_call,
             func_label, arg_label,
-            line_func, line_arg,
         )
 
         # ==========================================================
@@ -156,7 +139,6 @@ class ASTConstruction(Scene):
         )
 
         self.play(
-            line_func.animate.set_opacity(0.6),
             FadeIn(func_label, shift=DOWN * 0.08),
             run_time=0.8,
         )
@@ -169,7 +151,6 @@ class ASTConstruction(Scene):
         )
 
         self.play(
-            line_arg.animate.set_opacity(0.6),
             FadeIn(arg_label, shift=DOWN * 0.08),
             run_time=0.8,
         )
@@ -188,9 +169,10 @@ class ASTConstruction(Scene):
         # "`Hello, World` is what's being passed to it."
         # "So Python draws a map. A tree."
 
+        # Both lines grow from boxes up to Call
         self.play(
-            line_func_call.animate.set_opacity(0.7),
-            line_arg_call.animate.set_opacity(0.7),
+            line_print_call.animate.set_opacity(0.7),
+            line_hello_call.animate.set_opacity(0.7),
             run_time=0.8,
         )
 
@@ -214,7 +196,15 @@ class ASTConstruction(Scene):
             box_rp.animate.set_opacity(0.35),
             run_time=0.5,
         )
-        self.wait(1.2)
+        self.wait(0.8)
+
+        # Lines fade out before tighten
+        self.play(
+            line_print_call.animate.set_opacity(0),
+            line_hello_call.animate.set_opacity(0),
+            run_time=0.4,
+        )
+        self.wait(0.4)
 
         # --- Act 5: Each box finds its place (15.5 - 20.0s) ---
         # "Each box finds its place."
