@@ -9,11 +9,14 @@ class BytecodeScene(Scene):
         # Colors
         # --------------------------------------------------
 
-        BG = "#000000"
-        TEXT = "#E8F1FF"
-        MUTED = "#7C8DA6"
-        CYAN = "#00C2FF"
-        CARD_BG = "#0D1117"
+        BG    = "#000000"
+        TEXT  = "#F0F4FF"
+        MUTED = "#6B7A99"
+        CYAN  = "#00E5FF"
+        PINK  = "#FF2D95"
+        GOLD  = "#FFB800"
+        LIME  = "#39FF14"
+        MONO  = "JetBrains Mono"
 
         self.camera.background_color = BG
 
@@ -21,22 +24,21 @@ class BytecodeScene(Scene):
         # Card factory
         # --------------------------------------------------
 
-        def make_card(text):
+        def make_card(text, color):
             box = RoundedRectangle(
                 width=9.5,
                 height=1.2,
                 corner_radius=0.2,
-                stroke_color=MUTED,
-                stroke_width=1.5,
-                fill_color=CARD_BG,
-                fill_opacity=1
+                stroke_color=color,
+                stroke_width=3.0,
+                fill_opacity=0,
             )
 
             txt = Text(
                 text,
                 font_size=28,
-                color=TEXT,
-                font="JetBrains Mono"
+                color=color,
+                font=MONO,
             )
 
             txt.align_to(box.get_left() + RIGHT * 0.4, LEFT)
@@ -54,7 +56,8 @@ class BytecodeScene(Scene):
             "Done. Return."
         ]
 
-        cards = VGroup(*[make_card(t) for t in cards_text])
+        card_colors = [CYAN, GOLD, PINK, LIME]
+        cards = VGroup(*[make_card(t, card_colors[i]) for i, t in enumerate(cards_text)])
 
         # Automatically perfectly centers the stack with 0.4 spacing between cards
         cards.arrange(DOWN, buff=0.4).move_to(ORIGIN)

@@ -19,40 +19,6 @@ class ASTTreeScene(Scene):
         self.camera.background_color = BG
 
         # --------------------------------------------------
-        # Bottom boxes from previous shot
-        # --------------------------------------------------
-
-        box_style = dict(
-            corner_radius=0.15,
-            width=2.2,
-            height=0.75,
-            stroke_color=MUTED,
-            fill_color="#101722",
-            fill_opacity=1,
-        )
-
-        box1 = RoundedRectangle(**box_style)
-        box2 = RoundedRectangle(**box_style)
-        box3 = RoundedRectangle(**box_style)
-        box4 = RoundedRectangle(**box_style)
-
-        boxes = VGroup(box1, box2, box3, box4)
-        boxes.arrange(RIGHT, buff=0.4)
-        boxes.to_edge(DOWN, buff=0.6)
-
-        labels = VGroup(
-            Text("print", font_size=24, color=TEXT),
-            Text("(", font_size=24, color=TEXT),
-            Text('"Hello, World"', font_size=24, color=TEXT),
-            Text(")", font_size=24, color=TEXT),
-        )
-
-        for label, box in zip(labels, boxes):
-            label.move_to(box)
-
-        self.add(boxes, labels)
-
-        # --------------------------------------------------
         # Node helper
         # --------------------------------------------------
 
@@ -67,8 +33,7 @@ class ASTTreeScene(Scene):
                 corner_radius=0.15,
                 stroke_color=border_color,
                 stroke_width=2.5,
-                fill_color="#101722",
-                fill_opacity=1,
+                fill_opacity=0,
             )
 
             txt = Text(
@@ -105,15 +70,15 @@ class ASTTreeScene(Scene):
         # Layout (no overlap)
         # --------------------------------------------------
 
-        program.move_to(UP * 2.8)
+        program.move_to(UP * 2.0)
 
-        expression.move_to(UP * 1.2)
+        expression.move_to(UP * 0.4)
 
-        call.move_to(ORIGIN)
+        call.move_to(DOWN * 0.8)
 
-        name_node.move_to(LEFT * 3.8 + DOWN * 2.0)
+        name_node.move_to(LEFT * 3.8 + DOWN * 2.8)
 
-        string_node.move_to(RIGHT * 4.2 + DOWN * 2.0)
+        string_node.move_to(RIGHT * 4.2 + DOWN * 2.8)
 
         # --------------------------------------------------
         # Connections
@@ -191,8 +156,6 @@ class ASTTreeScene(Scene):
 
         self.play(
             tree_group.animate.scale(0.1).move_to(ORIGIN),
-            FadeOut(boxes),
-            FadeOut(labels),
             run_time=1.5,
         )
         
