@@ -1,30 +1,28 @@
 from manim import *
 import numpy as np
 
-class InductiveCoupling(Scene):
+class Shot003_InductiveCoupling(Scene):
     def construct(self):
         # --- CONFIGURATION & STYLES ---
-        # Note: Ensure you have "JetBrains Mono" installed on your system. 
-        # If Manim can't find it, it will default to a standard sans-serif.
         FONT = "JetBrains Mono"
         
         COLOR_WHITE = WHITE
-        COLOR_MUTED = BLUE_E  # Deep, muted blue for the magnetic field
-        COLOR_ACCENT = "#00E5FF" # Tracr's technical cyan/teal accent
+        COLOR_FIELD = "#0284C7"   # Bright vibrant cyan-blue for high mobile visibility
+        COLOR_ACCENT = "#00E5FF"  # Tracr's technical cyan/teal accent
 
         # --- BEAT 1: Reader & Field Establish (0s - 4s) ---
         
         # 1. Create the Reader
         reader_box = Rectangle(width=1.5, height=5, color=COLOR_WHITE, stroke_width=4)
-        reader_text = Text("READER", font=FONT, font_size=24, color=COLOR_WHITE).rotate(PI/2)
+        reader_text = Text("READER", font=FONT, font_size=32, color=COLOR_WHITE, weight=BOLD).rotate(PI/2)
         reader = VGroup(reader_box, reader_text).shift(LEFT * 5)
         
         self.play(FadeIn(reader), run_time=1)
 
         # 2. Create the Oscillating Magnetic Field
-        # We create concentric arcs that pulse in opacity to simulate an invisible, oscillating wave
+        # We create concentric arcs that pulse in opacity to simulate an oscillating wave
         arcs = VGroup(*[
-            Arc(radius=r, angle=PI, start_angle=-PI/2, color=COLOR_MUTED, stroke_width=6)
+            Arc(radius=r, angle=PI, start_angle=-PI/2, color=COLOR_FIELD, stroke_width=6)
             for r in np.arange(1, 8, 1)
         ]).shift(LEFT * 4.25) # Position at the right edge of the reader box
 
@@ -32,8 +30,8 @@ class InductiveCoupling(Scene):
         def update_field(mob, dt):
             mob.time += dt
             for i, arc in enumerate(mob):
-                # Sine wave function to pulse opacity based on time and distance (i)
-                opacity = 0.15 + 0.15 * np.sin(4 * mob.time - i)
+                # Bright sine wave oscillation clearly visible on mobile screens
+                opacity = 0.32 + 0.28 * np.sin(4 * mob.time - i)
                 arc.set_stroke(opacity=opacity)
 
         arcs.time = 0
@@ -44,8 +42,8 @@ class InductiveCoupling(Scene):
 
         # --- BEAT 2: Label Writes In (4s - 7s) ---
         
-        freq_label = Text("13.56 MHz", font=FONT, font_size=24, color=COLOR_WHITE)
-        freq_label.next_to(reader, DOWN, buff=0.5)
+        freq_label = Text("13.56 MHz", font=FONT, font_size=32, color=COLOR_ACCENT, weight=BOLD)
+        freq_label.next_to(reader, DOWN, buff=0.45)
         
         self.play(Write(freq_label), run_time=1)
         self.wait(2) # (Total elapsed: 7s)
@@ -57,7 +55,7 @@ class InductiveCoupling(Scene):
         
         # Create a 3-loop coil inside the card using slightly smaller rounded rectangles
         static_coil = VGroup(*[
-            RoundedRectangle(width=w, height=h, corner_radius=0.1, color=DARK_GRAY, stroke_width=2)
+            RoundedRectangle(width=w, height=h, corner_radius=0.1, color="#64748B", stroke_width=2.5)
             for w, h in zip(np.arange(3.0, 3.8, 0.3), np.arange(1.5, 2.3, 0.3))
         ])
         
@@ -69,12 +67,12 @@ class InductiveCoupling(Scene):
 
         # 2. Induce Current (The "Aha" Moment)
         # Highlight the coil to the Cyan accent color
-        self.play(static_coil.animate.set_color(COLOR_ACCENT).set_stroke(width=3), run_time=1)
+        self.play(static_coil.animate.set_color(COLOR_ACCENT).set_stroke(width=3.5), run_time=1)
 
         # 3. Create the Current Flow Indicator (Moving electrons/pulses)
         # We use a path exactly on the inner coil and animate dots moving along it
         current_path = RoundedRectangle(width=3.0, height=1.5, corner_radius=0.1).move_to(card.get_center())
-        current_pulses = VGroup(*[Dot(color=COLOR_ACCENT, radius=0.06) for _ in range(6)])
+        current_pulses = VGroup(*[Dot(color=COLOR_ACCENT, radius=0.08) for _ in range(6)])
 
         # Updater to move the dots seamlessly around the loop
         def create_pulse_updater(offset):
@@ -94,5 +92,7 @@ class InductiveCoupling(Scene):
         # --- BEAT 4: The Hold (13s - 19s) ---
         
         # The updaters for the field oscillation and the current flow will continue running automatically.
-        # We just hold the scene for the final 6 seconds to let the voiceover finish.
-        self.wait(6) # (Total elapsed: 19s / ~456 frames) 
+        self.wait(6) # (Total elapsed: 19s / ~456 frames)
+
+
+InductiveCoupling = Shot003_InductiveCoupling 

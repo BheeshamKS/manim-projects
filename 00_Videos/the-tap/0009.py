@@ -1,39 +1,39 @@
 from manim import *
 import numpy as np
 
-class SameEngine(Scene):
+class Shot009_SameEngine(Scene):
     def construct(self):
         # --- CONFIGURATION & STYLES ---
         FONT = "JetBrains Mono"
         
         COLOR_MAIN = WHITE
-        COLOR_MUTED = GRAY
-        COLOR_FIELD = BLUE_E      # Deep muted blue for the invisible field
+        COLOR_MUTED = "#CBD5E1"   # Crisp technical light slate for mobile readability
+        COLOR_FIELD = "#0284C7"   # Electric cyan-blue for the field
         COLOR_ACCENT = "#00E5FF"  # Tracr Cyan for the synced chip pulse
 
         # --- BEAT 1: Establish Split Screen (0s - 5s) ---
         # Voiceover: "This is also, quietly, why a contactless tap and inserting a chip card aren't two different technologies underneath."
         
         # 1. The Split Divider
-        divider = DashedLine(UP*4, DOWN*4, color=COLOR_MUTED, stroke_width=2)
+        divider = DashedLine(UP*4, DOWN*4, color="#64748B", stroke_width=2.5)
         
-        # 2. Left Side: Contact (Insert)
-        left_label = Text("INSERT (CONTACT)", font=FONT, font_size=20, color=COLOR_MUTED).to_corner(UL).shift(RIGHT * 1.5 + DOWN * 0.5)
+        # 2. Left Side: Contact (Insert) - Optimized size & brightness for phone
+        left_label = Text("INSERT (CONTACT)", font=FONT, font_size=28, color=COLOR_MAIN, weight=BOLD).to_corner(UL).shift(RIGHT * 0.5 + DOWN * 0.35)
         
         # The physical reader slot
         reader_slot = VGroup(
-            Rectangle(width=2.5, height=0.4, color=COLOR_MAIN, stroke_width=4),
+            Rectangle(width=2.6, height=0.45, color=COLOR_MAIN, stroke_width=4),
             # Tiny physical pins inside the slot
-            *[Line(ORIGIN, DOWN*0.2, color=COLOR_MAIN, stroke_width=2).shift(RIGHT * x) for x in np.arange(-0.4, 0.5, 0.2)]
+            *[Line(ORIGIN, DOWN*0.22, color=COLOR_MAIN, stroke_width=2.5).shift(RIGHT * x) for x in np.arange(-0.4, 0.5, 0.2)]
         ).shift(LEFT * 3.5 + UP * 2)
 
-        # 3. Right Side: Contactless (Tap)
-        right_label = Text("TAP (CONTACTLESS)", font=FONT, font_size=20, color=COLOR_MUTED).to_corner(UR).shift(LEFT * 1.5 + DOWN * 0.5)
+        # 3. Right Side: Contactless (Tap) - Optimized size & brightness for phone
+        right_label = Text("TAP (CONTACTLESS)", font=FONT, font_size=28, color=COLOR_MAIN, weight=BOLD).to_corner(UR).shift(LEFT * 0.5 + DOWN * 0.35)
         
-        # The magnetic field reader (reusing visual language from previous shots)
+        # The magnetic field reader
         reader_antenna = Rectangle(width=0.5, height=3, color=COLOR_MAIN, stroke_width=4).shift(RIGHT * 1 + UP * 0.5)
         arcs = VGroup(*[
-            Arc(radius=r, angle=PI, start_angle=-PI/2, color=COLOR_FIELD, stroke_width=4)
+            Arc(radius=r, angle=PI, start_angle=-PI/2, color=COLOR_FIELD, stroke_width=5)
             for r in np.arange(0.5, 4.0, 0.7)
         ]).move_to(reader_antenna.get_right(), aligned_edge=LEFT)
 
@@ -41,14 +41,14 @@ class SameEngine(Scene):
         def create_card():
             outline = RoundedRectangle(width=2.4, height=3.6, corner_radius=0.15, color=COLOR_MAIN, stroke_width=4)
             # The all-important engine (chip)
-            chip = RoundedRectangle(width=0.8, height=0.8, corner_radius=0.1, color=COLOR_MAIN, stroke_width=3)
+            chip = RoundedRectangle(width=0.85, height=0.85, corner_radius=0.1, color=COLOR_MAIN, stroke_width=3)
             chip.shift(UP * 0.6) # Positioned toward the top of the card
             
-            # Internal trace lines just to make it look technical
+            # Internal trace lines
             traces = VGroup(
-                Line(chip.get_bottom(), outline.get_bottom() + UP*0.2, color=COLOR_MUTED, stroke_width=2),
-                Line(chip.get_bottom() + LEFT*0.2, outline.get_bottom() + UP*0.2 + LEFT*0.2, color=COLOR_MUTED, stroke_width=2),
-                Line(chip.get_bottom() + RIGHT*0.2, outline.get_bottom() + UP*0.2 + RIGHT*0.2, color=COLOR_MUTED, stroke_width=2)
+                Line(chip.get_bottom(), outline.get_bottom() + UP*0.2, color="#94A3B8", stroke_width=2.5),
+                Line(chip.get_bottom() + LEFT*0.2, outline.get_bottom() + UP*0.2 + LEFT*0.2, color="#94A3B8", stroke_width=2.5),
+                Line(chip.get_bottom() + RIGHT*0.2, outline.get_bottom() + UP*0.2 + RIGHT*0.2, color="#94A3B8", stroke_width=2.5)
             )
             return VGroup(outline, traces, chip), chip
 
@@ -79,7 +79,6 @@ class SameEngine(Scene):
         # Updater to make both chips glow synchronously
         def synced_glow(mob):
             t = time_tracker.get_value()
-            # Math to create a sharp pulsing effect
             glow_intensity = (np.sin(t * 6) + 1) / 2 # Oscillates between 0 and 1
             
             if glow_intensity > 0.5:
@@ -109,3 +108,6 @@ class SameEngine(Scene):
         
         # Hold for the remainder of the 16 seconds (384 frames total)
         self.wait(4.5)
+
+
+SameEngine = Shot009_SameEngine

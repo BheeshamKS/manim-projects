@@ -1,19 +1,19 @@
 from manim import *
 
-class JargonReliefLoadModulation(Scene):
+class Shot008_JargonReliefLoadModulation(Scene):
     def construct(self):
         # --- CONFIGURATION & STYLES ---
         FONT = "JetBrains Mono"
         
         COLOR_MAIN = WHITE
-        COLOR_MUTED = GRAY
+        COLOR_MUTED = "#CBD5E1"  # Crisp light technical slate for mobile readability
         COLOR_ACCENT = "#00E5FF" # Tracr Cyan for the rope jerks
 
         # --- BEAT 1: Term Display (0s - 3s) ---
         # Voiceover: "That's called load modulation."
         
         # 1. Create the scary jargon term front and center
-        jargon_text = Text("Load Modulation", font=FONT, font_size=64, color=COLOR_MAIN)
+        jargon_text = Text("Load Modulation", font=FONT, font_size=68, color=COLOR_MAIN, weight=BOLD)
         
         # Write it in confidently
         self.play(Write(jargon_text), run_time=1.5)
@@ -22,9 +22,9 @@ class JargonReliefLoadModulation(Scene):
         # --- BEAT 2: De-emphasis (3s - 5s) ---
         # Voiceover: "Same rule applies: forget the term, keep the picture."
         
-        # 2. Visually demote the term (Exactly matching Shot 0004)
+        # 2. Visually demote the term (Scale 0.50 & bright slate for phone clarity)
         self.play(
-            jargon_text.animate.scale(0.35).to_corner(UL).set_color(COLOR_MUTED),
+            jargon_text.animate.scale(0.50).to_corner(UL, buff=0.6).set_color(COLOR_MUTED),
             run_time=2
         ) 
         # (Total elapsed: 5s)
@@ -34,15 +34,15 @@ class JargonReliefLoadModulation(Scene):
         
         # Helper function to generate clean, scalable stick figures
         def create_stick_figure(label_str, color=COLOR_MAIN):
-            head = Circle(radius=0.3, color=color, stroke_width=4)
-            body = Line(ORIGIN, DOWN*1.0, color=color, stroke_width=4).next_to(head, DOWN, buff=0)
-            arms = Line(LEFT*0.6, RIGHT*0.6, color=color, stroke_width=4).move_to(body.get_center() + UP*0.2)
-            leg_l = Line(body.get_bottom(), body.get_bottom() + DOWN*0.8 + LEFT*0.4, color=color, stroke_width=4)
-            leg_r = Line(body.get_bottom(), body.get_bottom() + DOWN*0.8 + RIGHT*0.4, color=color, stroke_width=4)
+            head = Circle(radius=0.32, color=color, stroke_width=4.5)
+            body = Line(ORIGIN, DOWN*1.1, color=color, stroke_width=4.5).next_to(head, DOWN, buff=0)
+            arms = Line(LEFT*0.65, RIGHT*0.65, color=color, stroke_width=4.5).move_to(body.get_center() + UP*0.2)
+            leg_l = Line(body.get_bottom(), body.get_bottom() + DOWN*0.85 + LEFT*0.4, color=color, stroke_width=4.5)
+            leg_r = Line(body.get_bottom(), body.get_bottom() + DOWN*0.85 + RIGHT*0.4, color=color, stroke_width=4.5)
             
             person = VGroup(head, body, arms, leg_l, leg_r)
-            label = Text(label_str, font=FONT, font_size=20, color=COLOR_MUTED)
-            label.next_to(person, DOWN, buff=0.4)
+            label = Text(label_str, font=FONT, font_size=32, color=COLOR_MAIN, weight=BOLD)
+            label.next_to(person, DOWN, buff=0.45)
             
             # Return the full group, plus a direct reference to the arms for anchoring the rope
             return VGroup(person, label), arms
@@ -74,10 +74,10 @@ class JargonReliefLoadModulation(Scene):
             # Flash cyan when pulled tight
             if t > 0.5:
                 rope.set_color(COLOR_ACCENT)
-                rope.set_stroke(width=5 + 2*t) # Gets slightly thicker when snapped
+                rope.set_stroke(width=5.5 + 2.5*t) # Gets thicker when snapped
             else:
                 rope.set_color(COLOR_MAIN)
-                rope.set_stroke(width=4)
+                rope.set_stroke(width=4.5)
                 
             return rope
             
@@ -95,7 +95,6 @@ class JargonReliefLoadModulation(Scene):
         # --- BEAT 4: The Tugging Pattern (6s - 12s) ---
         # Voiceover: "It's tugging on a rope the reader's already holding, in a pattern."
         
-        # Quick helper function to automate a perfect, snappy tug animation
         def tug_rope():
             # Snap back
             self.play(
@@ -130,3 +129,6 @@ class JargonReliefLoadModulation(Scene):
         
         # Hold for the final beats to reach exactly 12 seconds (288 frames)
         self.wait(2.8)
+
+
+JargonReliefLoadModulation = Shot008_JargonReliefLoadModulation
