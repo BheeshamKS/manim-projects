@@ -22,9 +22,11 @@ SHOTS = [
     ("0015.py", "Shot015_TheVault", "0015_TheVault.mp4"),
     ("0016.py", "Shot016_SecretKey", "0016_SecretKey.mp4"),
     ("0017.py", "Shot017_AlreadySpent", "0017_AlreadySpent.mp4"),
+    ("0018.py", "Shot018_CardRecap", "0018_CardRecap.mp4"),
     ("0020.py", "Shot020_SameMechanism", "0020_SameMechanism.mp4"),
     ("0021.py", "Shot021_ArchitectureSplit", "0021_ArchitectureSplit.mp4"),
     ("0023.py", "Shot023_PhoneAsksFirst", "0023_PhoneAsksFirst.mp4"),
+    ("0028.py", "Shot028_CreditsScene", "0028_CreditsScene.mp4"),
 ]
 
 def render_shot(script_file, scene_name, output_name):
