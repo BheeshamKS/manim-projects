@@ -26,6 +26,7 @@ SHOTS = [
     ("0020.py", "Shot020_SameMechanism", "0020_SameMechanism.mp4"),
     ("0021.py", "Shot021_ArchitectureSplit", "0021_ArchitectureSplit.mp4"),
     ("0023.py", "Shot023_PhoneAsksFirst", "0023_PhoneAsksFirst.mp4"),
+    ("0026.py", "Shot026_RelayRealWorld", "0026_RelayRealWorld.mp4"),
     ("0028.py", "Shot028_CreditsScene", "0028_CreditsScene.mp4"),
 ]
 
